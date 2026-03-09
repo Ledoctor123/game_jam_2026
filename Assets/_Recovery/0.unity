@@ -215,23 +215,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 86442ae4ce76e6447a366d5219168ec6, type: 3}
---- !u!1 &591740913 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 65702495048144492, guid: f760d5c33fde0a046b430d77effeb272, type: 3}
-  m_PrefabInstance: {fileID: 1590603969}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &591740917
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 591740913}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f087a9408342dc4ba150c18dd342cdb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CameraMouvement
 --- !u!1 &617378451 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -7029948723529949830, guid: f760d5c33fde0a046b430d77effeb272, type: 3}
@@ -507,14 +490,6 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -1853094968961178454, guid: f760d5c33fde0a046b430d77effeb272, type: 3}
-      propertyPath: field of view
-      value: 27
-      objectReference: {fileID: 0}
-    - target: {fileID: -1853094968961178454, guid: f760d5c33fde0a046b430d77effeb272, type: 3}
-      propertyPath: near clip plane
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: -1853094968961178454, guid: f760d5c33fde0a046b430d77effeb272, type: 3}
       propertyPath: m_projectionMatrixMode
       value: 1
       objectReference: {fileID: 0}
@@ -533,9 +508,6 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1810773124}
     m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 65702495048144492, guid: f760d5c33fde0a046b430d77effeb272, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 591740917}
     - targetCorrespondingSourceObject: {fileID: -516098083770646512, guid: f760d5c33fde0a046b430d77effeb272, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2020839818}
@@ -597,6 +569,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 874431933}
     m_Modifications:
+    - target: {fileID: 2096662766582295200, guid: 5b05df3f9a3f9e54197b39a75d783fdf, type: 3}
+      propertyPath: m_Constraints
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7032092291524217931, guid: 5b05df3f9a3f9e54197b39a75d783fdf, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

@@ -5,41 +5,66 @@ using static UnityEngine.Debug;
 public class Weapon : MonoBehaviour
 {
     private float _damage = 15f;
-    private Component _ownerScript;
+
+    private Player _playerOwner;
+    private Enemy _enemyOwner;
+
+    [Header("Materials")]
+    [SerializeField] private Material _weaponMaterial;
+    [SerializeField] private Material _weaponAttackingMaterial;
+
+    private Renderer _renderer;
+    private bool _lastIsAttacking;
 
     void Awake()
     {
-        _ownerScript = (Component)GetComponentInParent<Player>() ?? GetComponentInParent<Enemy>();
+        _playerOwner = GetComponentInParent<Player>();
+        _enemyOwner = GetComponentInParent<Enemy>();
+        _renderer = GetComponent<Renderer>() ?? GetComponentInChildren<Renderer>();
 
-        if (_ownerScript == null)
+        if (_playerOwner == null && _enemyOwner == null)
         {
             LogError($"[Weapon] Aucun Player/Enemy trouvé dans les parents de {name}");
             return;
         }
 
-        Log($"[Weapon] Owner script: {_ownerScript.GetType().Name} | Tag: {_ownerScript.gameObject.tag}");
+        if (_playerOwner != null) Log("[Weapon] Owner = Player");
+        if (_enemyOwner != null) Log("[Weapon] Owner = Enemy");
+    }
+
+    void Update()
+    {
+        if (_playerOwner == null || _renderer == null) return;
+
+        bool isAttacking = _playerOwner.IsAttacking;
+        if (isAttacking == _lastIsAttacking) return;
+
+        _lastIsAttacking = isAttacking;
+        _renderer.material = isAttacking ? _weaponAttackingMaterial : _weaponMaterial;
     }
 
     void OnTriggerEnter(Collider other)
     {
-        if (_ownerScript == null) return;
-
-        // Case: Player Hits Enemy
-        if (_ownerScript is Player && other.CompareTag("Enemy"))
+        // Player -> Enemy
+        if (_playerOwner != null && other.CompareTag("Enemy"))
         {
             Enemy enemy = other.GetComponentInParent<Enemy>();
-            if (enemy != null)
+            if (enemy != null &&
+                _playerOwner.TimerSinceLastAttack >= _playerOwner.SecondPerAttack &&
+                _playerOwner.IsAttacking)
             {
+                _playerOwner.TimerSinceLastAttack = 0f;
                 enemy.TakeDamage(_damage);
             }
         }
 
-        // Case: Enemy Hits Player
-        if (_ownerScript is Enemy && other.CompareTag("Player"))
+        // Enemy -> Player
+        if (_enemyOwner != null && other.CompareTag("Player"))
         {
             Player player = other.GetComponentInParent<Player>();
-            if (player != null)
+            if (player != null && _enemyOwner.TimerSinceLastAttack >= _enemyOwner.SecondPerAttack)
             {
+                _enemyOwner.TimerSinceLastAttack = 0f;
                 player.TakeDamage(_damage);
             }
         }
