@@ -2,15 +2,27 @@ using Unity.Mathematics;
 using UnityEngine;
 using static UnityEngine.Debug;
 
+[RequireComponent(typeof(Rigidbody))]
 public class Enemy : MonoBehaviour
 {
+    private float _timerSinceLastAttack;
     private float _healthPoints;
+    private float _secondPerAttack;
     public float HealthPoints {get => _healthPoints;}
+    public float SecondPerAttack {get => _secondPerAttack; set => _secondPerAttack = value;}
+    public float TimerSinceLastAttack {get => _timerSinceLastAttack; set => _timerSinceLastAttack = value;} 
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+
+    private void Start()
     {
+        _timerSinceLastAttack = 0f;
         _healthPoints = 100f;
+        _secondPerAttack = 1.5f;
+    }
+
+    private void Update()
+    {
+        _timerSinceLastAttack += Time.deltaTime;
     }
 
     public void TakeDamage(float damage)

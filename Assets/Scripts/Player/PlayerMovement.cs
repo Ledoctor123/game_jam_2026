@@ -26,9 +26,13 @@ public class PlayerMovement : MonoBehaviour
     private float _dashEndTime;
     private float _nextDashTime;
 
-    void Start()
+    private void Awake()
     {
         _rb = GetComponent<Rigidbody>();
+        _rb.freezeRotation = true;
+    }
+    void Start()
+    {
         _moveAction = InputSystem.actions.FindAction("Move");
         _dashAction = InputSystem.actions.FindAction("Dash");
         //_runAction = InputSystem.actions.FindAction("Sprint");
